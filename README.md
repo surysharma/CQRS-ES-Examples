@@ -7,3 +7,10 @@ Run the following command:
 
 Once the server is up, you can run the command:
 **curl -i http://127.0.0.1:9000/api/product/test**
+
+A simple product can be posted via REST endpoint
+
+**curl -H "Content-Type: application/json" -X POST -d '{"message": "Hi"}' http://127.0.0.1:9000/api/product/132**
+
+
+
