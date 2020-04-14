@@ -15,7 +15,7 @@ public class ProductServiceImplTest {
         withServer(defaultSetup(), server -> {
             ProductService service = server.client(ProductService.class);
 
-            String message = service.test().invoke().toCompletableFuture().get(5, TimeUnit.SECONDS);
+            String message = service.healthCheck().invoke().toCompletableFuture().get(5, TimeUnit.SECONDS);
             Assert.assertThat("Product service is up!!!", is(message));
 
         });
