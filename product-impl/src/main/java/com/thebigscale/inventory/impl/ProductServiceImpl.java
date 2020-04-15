@@ -7,11 +7,13 @@ import akka.cluster.sharding.typed.javadsl.Entity;
 import akka.cluster.sharding.typed.javadsl.EntityRef;
 import com.lightbend.lagom.javadsl.api.ServiceCall;
 import com.lightbend.lagom.javadsl.api.transport.BadRequest;
+import com.thebigscale.inventory.api.ProductDescView;
 import com.thebigscale.inventory.api.ProductMessage;
 import com.thebigscale.inventory.api.ProductService;
 import com.thebigscale.inventory.impl.entity.ProductCommand;
 import com.thebigscale.inventory.impl.entity.ProductEntity;
 import com.thebigscale.inventory.impl.readside.Products;
+import org.pcollections.PSequence;
 
 import javax.inject.Inject;
 import java.time.Duration;
@@ -56,6 +58,11 @@ public class ProductServiceImpl implements ProductService {
                     .thenApply(this::handleConfirmation)
                     .thenApply(accepted -> Done.getInstance());
         };
+    }
+
+    @Override
+    public ServiceCall<NotUsed, PSequence<ProductDescView>> getAllProducts() {
+        return request -> products.getAllProducts();
     }
 
     /**
