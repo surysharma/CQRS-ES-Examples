@@ -1,12 +1,9 @@
 package com.thebigscale.inventory.impl.entity;
 
-import akka.actor.typed.BackoffSupervisorStrategy;
 import akka.cluster.sharding.typed.javadsl.EntityContext;
 import akka.cluster.sharding.typed.javadsl.EntityTypeKey;
 import akka.persistence.typed.PersistenceId;
 import akka.persistence.typed.javadsl.*;
-
-import java.util.Optional;
 
 public class ProductEntity extends EventSourcedBehaviorWithEnforcedReplies<ProductCommand, ProductEvent, ProductState> {
 
@@ -48,8 +45,7 @@ public class ProductEntity extends EventSourcedBehaviorWithEnforcedReplies<Produ
                         Effect()
                                 // In response to this command, we want to first persist it as a
                                 // ProductMessageChanged event
-//                                .persist(new ProductEvent.ProductMessageChanged(entityId, cmd.message))
-                                .none()
+                                .persist(new ProductEvent.ProductMessageChanged(entityId, cmd.message))
                                 // Then once the event is successfully persisted, we respond with done.
                                 .thenReply(cmd.replyTo, __ -> new ProductCommand.Accepted())
                 );
